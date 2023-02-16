@@ -1,22 +1,6 @@
-/*!
 
-=========================================================
-* Light Bootstrap Dashboard React - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React, { Component } from "react";
-import { useLocation, Route, Switch } from "react-router-dom";
+import React, { Component, Outlet } from "react";
+import { useLocation, Route, Routes } from "react-router-dom";
 
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import Footer from "components/Footer/Footer";
@@ -33,24 +17,28 @@ function Admin() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
-  const getRoutes = (routes) => {
+
+  const getRoute = (layout, path, component) => {
+    return (
+      <Route
+        path={path}
+        element={component}
+        key={layout + path}
+      />
+    );
+  }
+  const getRoutes = () => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            render={(props) => <prop.component {...props} />}
-            key={key}
-          />
-        );
-      } else if (prop.layout === "/game") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            render={(props) => <prop.component {...props} />}
-            key={key}
-          />
-        );
+
+        if (prop.child && prop.child.length > 0) {
+          prop.child.map((p) => {
+            return getRoute(p.layout, p.path, p.component);
+          })
+        }
+        if (!prop.child) {
+          return getRoute(prop.layout, prop.path, prop.component);
+        }
       } else {
         return null;
       }
@@ -76,7 +64,9 @@ function Admin() {
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
           <div className="content">
-            <Switch>{getRoutes(routes)}</Switch>
+            <Routes>
+              {getRoutes()}
+            </Routes>
           </div>
           <Footer />
         </div>

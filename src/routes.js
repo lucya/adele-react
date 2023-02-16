@@ -1,69 +1,70 @@
-/*!
 
-=========================================================
-* Light Bootstrap Dashboard React - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import Dashboard from "views/Dashboard.js";
-import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
-import Typography from "views/Typography.js";
-import Icons from "views/Icons.js";
-import Maps from "views/Maps.js";
-import Notifications from "views/Notifications.js";
-import TicTacToe from "views/games/TicTacToe.js";
-import Upgrade from "views/Upgrade.js";
+import Dashboard from "pages/Dashboard.js";
+import UserProfile from "pages/UserProfile.js";
+import MovieList from "pages/movie/MovieList.js";
+import TableList from "pages/TableList.js";
+import PostList from "pages/PostList.js";
+import Typography from "pages/Typography.js";
+import Icons from "pages/Icons.js";
+import Maps from "pages/Maps.js";
+import Notifications from "pages/Notifications.js";
+import TicTacToe from "pages/games/TicTacToe.js";
 
 const dashboardRoutes = [
-  // {
-  //   upgrade: true,
-  //   path: "/upgrade",
-  //   name: "Upgrade to PRO",
-  //   icon: "nc-icon nc-alien-33",
-  //   component: Upgrade,
-  //   layout: "/admin",
-  //   isParent: false,
-  // },
   {
     path: "/dashboard",
     name: "Dashboard",
     icon: "nc-icon nc-chart-pie-35",
-    component: Dashboard,
+    component: <Dashboard />,
     layout: "/admin",
     isParent: true,
   },
   {
-    path: "/user",
+    path: "/movie",
+    name: "상영중 영화",
+    icon: "nc-icon nc-circle-09",
+    component: <MovieList />,
+    layout: "/admin",
+    isParent: true,
+  },
+  {
+    path: "/user/:userId",
     name: "User Profile",
     icon: "nc-icon nc-circle-09",
-    component: UserProfile,
+    component: <UserProfile />,
     layout: "/admin",
     isParent: true,
   },
   {
-    path: "/table",
-    name: "Table List",
+    path: "/tables",
+    name: "Tables",
     icon: "nc-icon nc-notes",
-    component: TableList,
+    component: null,
     layout: "/admin",
     isParent: true,
+    child: [{
+      path: "/table",
+      name: "Table List",
+      icon: "nc-icon nc-grid-45",
+      component: <TableList />,
+      layout: "/admin",
+      isParent: false,
+      parentPath: '/table',
+    }, {
+      path: "/posts",
+      name: "Posts",
+      icon: "nc-icon nc-grid-45",
+      component: <PostList />,
+      layout: "/admin",
+      isParent: false,
+      parentPath: '/table',
+    }]
   },
   {
     path: "/typography",
     name: "Typography",
     icon: "nc-icon nc-paper-2",
-    component: Typography,
+    component: <Typography />,
     layout: "/admin",
     isParent: true,
   },
@@ -71,7 +72,7 @@ const dashboardRoutes = [
     path: "/icons",
     name: "Icons",
     icon: "nc-icon nc-atom",
-    component: Icons,
+    component: <Icons />,
     layout: "/admin",
     isParent: true,
   },
@@ -79,7 +80,7 @@ const dashboardRoutes = [
     path: "/maps",
     name: "Maps",
     icon: "nc-icon nc-pin-3",
-    component: Maps,
+    component: <Maps />,
     layout: "/admin",
     isParent: true,
   },
@@ -87,24 +88,25 @@ const dashboardRoutes = [
     path: "/notifications",
     name: "Notifications",
     icon: "nc-icon nc-bell-55",
-    component: Notifications,
+    component: <Notifications />,
     layout: "/admin",
     isParent: true,
   },
   {
-    path: "/tic-tac-toe",
+    path: "/game",
     name: "Game",
     icon: "nc-icon nc-controller-modern",
-    component: TicTacToe,
-    layout: "/game",
+    component: null,
+    layout: "/admin",
     isParent: true,
     child: [{
       path: "/tic-tac-toe",
       name: "TicTacToe",
       icon: "nc-icon nc-grid-45",
-      component: TicTacToe,
-      layout: "/game",
+      component: <TicTacToe />,
+      layout: "/admin",
       isParent: false,
+      parentPath: '/game',
     }]
   }
 ];

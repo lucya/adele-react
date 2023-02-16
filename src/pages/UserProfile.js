@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from 'react-router-dom';
 
 // react-bootstrap components
 import {
@@ -14,6 +15,8 @@ import {
 } from "react-bootstrap";
 
 function User() {
+  const { userId } = useParams();
+
   return (
     <>
       <Container fluid>
@@ -25,6 +28,19 @@ function User() {
               </Card.Header>
               <Card.Body>
                 <Form>
+                  <Row>
+                    <Col md="12">
+                      <Form.Group>
+                        <label>User ID (disabled)</label>
+                        <Form.Control
+                          defaultValue="User ID"
+                          disabled
+                          type="text"
+                          value={userId}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
                   <Row>
                     <Col className="pr-1" md="5">
                       <Form.Group>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { useLocation, NavLink, Outlet } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav, Dropdown } from "react-bootstrap";
-
-// const [currentMenu, setCurrentMenu] = useState('/admin/dashboard');
 
 function RenderNavLink({ layout, path, icon, name, component, isSub }) {
   return (
@@ -21,10 +19,10 @@ function RenderNavLink({ layout, path, icon, name, component, isSub }) {
   )
 }
 
-function RenderDropdown({ layout, path, icon, name, component, child }) {
+function RenderDropdown({ layout, path, icon, name, child }) {
   return (
 
-    <Dropdown as={Nav.Item}>
+    <Dropdown>
       <Dropdown.Toggle
         to={layout + path}
         as={Nav.Link}
@@ -35,8 +33,8 @@ function RenderDropdown({ layout, path, icon, name, component, child }) {
         <i className={icon} />
         <p>{name}</p>
       </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {child.map((prop, key) => {
+      <Dropdown.Menu as={Nav.Item}>
+        {child.map((prop) => {
           return (
             <RenderNavLink
               layout={prop.layout}
@@ -65,13 +63,11 @@ export default function SidebarMenu({ routes }) {
   return (
     <>
       <Nav>
-
         {routes.map((prop, key) => {
           if (!prop.redirect)
             return (
               <li
                 className={
-
                   // !prop.child ? activeRoute(prop.layout + prop.path) : activeRoute(prop.layout + prop.parentPath)
                   prop.upgrade
                     ? "active active-pro"
@@ -79,7 +75,6 @@ export default function SidebarMenu({ routes }) {
                 }
                 key={prop.layout + prop.path}
               >
-
                 {!prop.child ?
                   <RenderNavLink
                     layout={prop.layout}
@@ -94,16 +89,13 @@ export default function SidebarMenu({ routes }) {
                     path={prop.path}
                     icon={prop.icon}
                     name={prop.name}
-                    component={prop.component}
                     child={prop.child} />
                 }
               </li>
             );
           return null;
         })}
-
       </Nav>
-      <Outlet />
     </>
   )
 }

@@ -20,8 +20,8 @@ root.render(
       <Routes>
         <Route path="/admin/*" element={<AdminLayout />} />
         <Route path="/user/*" element={<UserLayout />} />
-        <Route path="/home" element={<Navigate to="/admin/dashboard" />} />
-        <Route path="/" element={<Navigate replace to="/user/login" />} />
+        <Route path="/home" exact element={<Navigate to="/admin/dashboard" />} />
+        <Route path="/" exact element={<Navigate replace to="/user/login" />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

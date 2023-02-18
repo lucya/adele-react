@@ -23,6 +23,7 @@ function Admin() {
       <Route
         path={path}
         element={component}
+        component={component}
         key={layout + path}
       />
     );
